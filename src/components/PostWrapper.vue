@@ -7,33 +7,34 @@
 </template>
 
 <script>
-  import UserIcon from "../modules/UserIcon.vue";
-  import PostMeta from "../modules/PostMeta.vue";
-  /*import CommentWrapper from './CommentWrapper'*/
-  import ContentBox from "../modules/ContentBox.vue";
+import UserIcon from './UserIcon';
+import PostMeta from './PostMeta';
+/* import CommentWrapper from './CommentWrapper' */
+import ContentBox from './ContentBox';
 
-  export default {
-    name: "PostWrapper",
-    data() {
-      return {
-        msg: "Welcome to Your Vue.js App"
-      };
-    },
-    computed: {
-      sortedPosts() {
-        if (this.posts) {
-          return this.posts.sort((a, b) => b.postedOn - a.postedOn);
-        }
-        return [];
+export default {
+  name: 'PostWrapper',
+  data() {
+    return {
+      msg: 'Welcome to Your Vue.js App',
+    };
+  },
+  computed: {
+    sortedPosts() {
+      if (this.posts && this.posts.length) {
+        const arr = this.posts.slice();
+        return arr.sort((a, b) => b.postedOn - a.postedOn);
       }
+      return [];
     },
-    components: {
-      UserIcon,
-      PostMeta,
-      ContentBox
-    },
-    props: ["posts"]
-  };
+  },
+  components: {
+    UserIcon,
+    PostMeta,
+    ContentBox,
+  },
+  props: ['posts'],
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -48,10 +49,6 @@
 
   .post__info {
     padding: 0 20px;
-  }
-
-  .post__content {
-    margin-left: 60px;
   }
 
   .post__comments {

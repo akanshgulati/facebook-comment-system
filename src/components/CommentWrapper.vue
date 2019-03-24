@@ -6,13 +6,13 @@
   </div>
 </template>
 <script>
-  /*import Comment from '../modules/Comment.vue'*/
+/* import Comment from '../modules/Comment.vue' */
 
-  export default {
-    name: 'CommentWrapper',
-    components: {
-      /*Comment*/
-    },
-    props: ['comments', 'depth']
-  };
+export default {
+  name: 'CommentWrapper',
+  components: {
+    /* Comment */
+  },
+  props: ['comments', 'depth'],
+};
 </script>

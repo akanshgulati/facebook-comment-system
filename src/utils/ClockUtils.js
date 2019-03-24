@@ -1,4 +1,4 @@
-import {isNumber} from "./DataTypeUtils";
+import { isNumber } from './DataTypeUtils';
 
 /**
  * Returns the human understandable time
@@ -7,22 +7,22 @@ import {isNumber} from "./DataTypeUtils";
  */
 export const getHumanReadableTime = (timestamp) => {
   if (!isNumber(timestamp)) {
-    return "";
+    return '';
   }
-  const now = +new Date;
+  const now = +new Date();
   // calculating the difference between current time and the param received
   const diff = Math.floor((now - timestamp) / 1000);
   // when both timestamps are equal
   if (diff === 0) {
-    return "just now";
+    return 'just now';
   }
   // when different between timestamps is less than a minute
   if (diff < 60) {
-    return "a few sec. ago";
+    return 'a few sec. ago';
   }
   // when different between timestamps is 1 or less than 2 minutes
   if (diff === 60 || diff < 120) {
-    return `1 minute ago`;
+    return '1 minute ago';
   }
   // when different between timestamps is more than 2 minutes or less then an hour
   if (diff > 120 && diff < 3600) {
@@ -30,7 +30,7 @@ export const getHumanReadableTime = (timestamp) => {
   }
   // when different between timestamps is 1 or less than 2 hours
   if (diff === 3600 && diff < 7200) {
-    return `1 hour ago`;
+    return '1 hour ago';
   }
   // when different between timestamps is more than equal to 2 hours or less than a day
   if (diff >= 7200 && diff < 86400) {
@@ -38,7 +38,7 @@ export const getHumanReadableTime = (timestamp) => {
   }
   // when different between timestamps is 1 or less than 2 days
   if (diff >= 86400 && diff < 172800) {
-    return `1 day ago`;
+    return '1 day ago';
   }
   // when different between timestamps is more than equal to 2 days and less than 30 days
   if (diff >= 172800 || diff < 2592000) {
@@ -49,3 +49,5 @@ export const getHumanReadableTime = (timestamp) => {
 
   return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 };
+
+export const getTime = () => +new Date();

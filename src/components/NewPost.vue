@@ -1,8 +1,11 @@
 <template>
-  <div class="new-post" @keydown.enter.exact.prevent="onSend">
-    <UserIcon :url="userIcon" class="new-post__img"></UserIcon>
+  <div :class="{'new-post--primary': isPrimary, 'new-post--secondary': !isPrimary}" class="new-post"
+       @keydown.enter.exact.prevent="onSend">
+
+    <UserIcon :url="userIcon" class="new-post__img" :size="iconSize"></UserIcon>
+
     <div class="new-post__content">
-      <textarea class="" v-model="content" :placeholder="placeholder" rows="1" @input="onInput"></textarea>
+      <textarea v-model="content" :placeholder="placeholder" rows="1" @input="onInput"></textarea>
     </div>
     <div class="new-post__control-buttons">
       <div class="new-post__control-buttons__send" @click="onSend">Send</div>
@@ -11,63 +14,73 @@
 </template>
 
 <script>
-  import UserIcon from "../modules/UserIcon.vue";
-  import {generateId} from "../utils/commonUtils";
+import UserIcon from './UserIcon';
 
-  export default {
-    data() {
-      return {
-        msg: "Welcome to Your Vue.js App",
-        content: "",
-        userIcon: "/static/faces/1.jpg"
-      };
-    },
-    methods: {
-      onSend() {
-        if (this.content.length) {
-          // sending data
-          this.$emit("onSend", {
-            content: this.content,
-            postedOn: +new Date
-          });
+export default {
+  data() {
+    return {
+      content: '',
+      userIcon: '/static/faces/1.jpg',
+    };
+  },
+  methods: {
+    onSend() {
+      if (this.content.length) {
+        // sending data
+        this.$emit('onSend', {
+          content: this.content,
+          postedOn: +new Date(),
+        });
 
-          this.content = "";
-          this.adjustTextAreaSize();
-        }
-      },
-      adjustTextAreaSize() {
-        const textArea = this.$el.querySelector("textarea");
-        textArea.style.fontSize = textArea.textLength > 0 ? textArea.textLength > 80 ? "15px" : "20px" : "15px;";
-        textArea.style.height = "";
-        textArea.style.height = textArea.scrollHeight + "px";
-      },
-      onInput() {
+        this.content = '';
         this.adjustTextAreaSize();
-      },
-      focusInput(){
-        const textArea = this.$el.querySelector("textarea");
-        textArea.focus();
       }
     },
-    components: {
-      UserIcon
-    },
-    watch: {
-      initContent: function(data) {
-        this.content = data.content;
-        this.focusInput();
+    adjustTextAreaSize() {
+      if (!this.isPrimary) {
+        return;
       }
+      const textArea = this.$el.querySelector('textarea');
+      textArea.style.fontSize = textArea.textLength > 0 ? (textArea.textLength > 80 ? '15px' : '20px') : '15px;';
+      textArea.style.height = '';
+      textArea.style.height = `${textArea.scrollHeight}px`;
     },
-    props: {
-      placeholder: {
-        type: String,
-        default: "Write a comment"
-      },
-      initContent: {
-        type: Object
-      }
-    }
-  };
+    onInput() {
+      this.adjustTextAreaSize();
+    },
+    focusInput() {
+      const textArea = this.$el.querySelector('textarea');
+      textArea.focus();
+    },
+  },
+  components: {
+    UserIcon,
+  },
+  watch: {
+    initContent(data) {
+      this.content = data.content;
+      this.focusInput();
+    },
+  },
+  props: {
+    placeholder: {
+      type: String,
+      default: 'Write a comment',
+    },
+    initContent: {
+      type: Object,
+    },
+    isPrimary: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    iconSize() {
+      return this.isPrimary ? 'medium' : 'small';
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -76,16 +89,20 @@
   .new-post {
     border: 1px solid #e0e4ea;
     border-radius: 10px;
-    padding: 10px 20px;
     display: flex;
     align-items: center;
     background-color: #fff;
   }
 
+  .new-post--primary {
+    padding: 10px 20px;
+  }
+
+  .new-post--secondary {
+    padding: 5px 10px;
+  }
+
   .new-post__img {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
     align-self: flex-start;
   }
 
