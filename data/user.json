@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Akansh Gulati",
+    "id": "fa0c645c-cee8-Scb8-U078-935d5e3e3293",
+    "email": "akansh@gmail.com",
+    "username": "akansh",
+    "image": "static/faces/1.jpg"
+  },
+  {
+    "name": "Manish",
+    "id": "67833f65-ddde-S87d-U46c-b91b9c063958",
+    "email": "manish@gmail.com",
+    "username": "manish",
+    "image": "static/faces/2.jpg"
+  },
+  {
+    "name": "Sajid",
+    "id": "6a6321c1-9958-S78b-Uc6c-e8f6035b5f60",
+    "email": "sajid@gmail.com",
+    "username": "sajid",
+    "image": "static/faces/2.jpg"
+  }
+]
