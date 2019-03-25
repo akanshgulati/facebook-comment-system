@@ -19,5 +19,19 @@
     "email": "sussan@gmail.com",
     "username": "sussan",
     "image": "/static/faces/3.jpg"
+  },
+  {
+    "name": "Charles",
+    "id": "3a0c645c-3ee8-Scb8-U078-435d5e3e3291",
+    "email": "charles@gmail.com",
+    "username": "charles",
+    "image": "/static/faces/4.jpg"
+  },
+  {
+    "name": "Shipra",
+    "id": "4a03645c-3ee8-Scb8-U078-435d5e3e3291",
+    "email": "shipra@gmail.com",
+    "username": "shipra",
+    "image": "/static/faces/5.jpg"
   }
 ]

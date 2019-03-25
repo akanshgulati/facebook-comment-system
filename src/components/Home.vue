@@ -1,20 +1,20 @@
 <template>
   <div v-if="!isLoading" class="home">
     <div class="comment-system">
-    <NewPost
+      <h1>Post Section</h1>
+      <NewPost
       v-if="!isLoading"
       v-on:onSend="sendNewPost"
       placeholder="What's on your mind?"
       class="comment-system__new-post"
       :isPrimary="true"/>
-
-    <transition mode="out-in">
+      <transition mode="out-in">
       <Loading v-if="isLoading"></Loading>
       <PostWrapper :posts="postData" v-else></PostWrapper>
     </transition>
-  </div>
-
+    </div>
     <div class="timeline-block">
+      <h1>Timeline Section</h1>
       <TimelineWrapper></TimelineWrapper>
     </div>
   </div>
@@ -35,7 +35,8 @@ export default {
       .then((data) => {
         this.$set(this, 'postData', data[0]);
         this.$store.dispatch('setUsers', data[1]);
-        this.$store.commit('setCurrentUser', data[1][0]);
+        const randomUser = data[1][Math.floor(Math.random() * data[1].length)];
+        this.$store.commit('setCurrentUser', randomUser);
         this.isLoading = false;
       });
   },

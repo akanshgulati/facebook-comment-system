@@ -1,7 +1,6 @@
-# fb-comment-frontend
+# Facebook Communication System
 
-> A commenting system
-
+> Project to show commenting system and timeline block [Demo](https://fbcommentsystem.netlify.com/)
 ## Build Setup
 
 ``` bash
@@ -24,4 +23,10 @@ npm run unit
 npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Functionality
+1. Auto increase new post section height and font size reduces with increase in content.
+2. 2-level nested comments are supported.
+3. Referring user directly with `@` in order to target that user.
+4. Timeline keeps checking for updates and add it in the list.
+5. Human readable post time
+6. Random user as current user on every reload
