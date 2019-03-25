@@ -1,5 +1,6 @@
 <template>
-  <a :class="{'primary': type === 'primary', 'secondary': type !== 'primary', 'small': size === 'small'}"
+  <a :class="{'primary': type === 'primary', 'secondary': type !== 'primary',
+  'small': size === 'small'}"
      @click="onClick">
     {{value}}
   </a>

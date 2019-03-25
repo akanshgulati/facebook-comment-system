@@ -26,11 +26,11 @@ export default {
   beforeMount() {
     Promise.all([GetContents(), GetUsers()])
       .then((data) => {
-      this.$set(this, 'postData', data[0]);
-      this.$store.dispatch('setUsers', data[1]);
-      this.$store.commit('setCurrentUser', data[1][0]);
-      this.isLoading = false;
-    });
+        this.$set(this, 'postData', data[0]);
+        this.$store.dispatch('setUsers', data[1]);
+        this.$store.commit('setCurrentUser', data[1][0]);
+        this.isLoading = false;
+      });
   },
   data() {
     return {
@@ -59,7 +59,7 @@ export default {
       ],
       postData: [],
       isLoading: true,
-      currentUser: ''
+      currentUser: '',
     };
   },
   methods: {
@@ -70,7 +70,7 @@ export default {
         depth: 1,
         comments: 0,
         id: generateId(),
-        userId: this.$store.state.currentUser.id
+        userId: this.$store.state.currentUser.id,
       };
       this.postData.push(content);
       SetContent(content);

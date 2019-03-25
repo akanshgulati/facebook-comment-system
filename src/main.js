@@ -4,13 +4,14 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import store from './store'
+import store from './store';
 
 // Setting Dummy data
 import { Get } from './utils/StorageUtils';
 import { SetContent, SetUser, StorageKeys } from './utils/HttpUtils';
 import ContentData from '../data/post.json';
 import UserData from '../data/user.json';
+
 (function loadDummyData() {
   if (!Get(StorageKeys.CONTENT_META) || !Get(StorageKeys.USER_META)) {
     ContentData.forEach((content) => {
@@ -23,6 +24,7 @@ import UserData from '../data/user.json';
 }());
 
 Vue.config.productionTip = false;
+/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,

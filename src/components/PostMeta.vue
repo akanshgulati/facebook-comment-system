@@ -40,9 +40,9 @@ export default {
       if (user) {
         return user;
       }
-      return {}
-    }
-  }
+      return {};
+    },
+  },
 };
 </script>
 <style>

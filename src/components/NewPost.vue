@@ -19,7 +19,7 @@ import UserIcon from './UserIcon';
 export default {
   data() {
     return {
-      content: ''
+      content: '',
     };
   },
   methods: {
@@ -40,6 +40,7 @@ export default {
         return;
       }
       const textArea = this.$el.querySelector('textarea');
+      /* eslint-disable no-nested-ternary */
       textArea.style.fontSize = textArea.textLength > 0 ? (textArea.textLength > 80 ? '15px' : '20px') : '15px;';
       textArea.style.height = '';
       textArea.style.height = `${textArea.scrollHeight}px`;
@@ -80,7 +81,7 @@ export default {
     },
     currentUserIcon() {
       return this.$store.state.currentUser.image;
-    }
+    },
   },
 };
 </script>

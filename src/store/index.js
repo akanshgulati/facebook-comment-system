@@ -5,19 +5,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userData: {}
+    userData: {},
   },
   mutations: {
-    addUsers (state, payload = []) {
-      payload.forEach(load => state.userData[load.id] = load);
+    addUsers(state, payload = []) {
+      payload.forEach((load) => { state.userData[load.id] = load; });
     },
-    setCurrentUser (state, payload){
+    setCurrentUser(state, payload) {
       state.currentUser = payload;
-    }
+    },
   },
   actions: {
     setUsers(context, payload) {
       context.commit('addUsers', payload);
-    }
-  }
+    },
+  },
 });

@@ -1,8 +1,7 @@
 <template>
   <div class="control-box">
-    <Link :value="depth === 1 ? 'Comment': 'Reply'" @click="toggle" type="primary"></Link>
-    <!--<a class="control-box__link-left" @click="toggle">{{depth === 1 ? 'Comment': 'Reply'}}</a>-->
-    <Link :value="secondaryText" @click="toggle" type="secondary"></Link>
+    <Link :value="depth === 1 ? 'Comment': 'Reply'" @click="toggle" type="primary"/>
+    <Link :value="secondaryText" @click="toggle" type="secondary"/>
   </div>
 </template>
 <script>

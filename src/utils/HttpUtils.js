@@ -1,14 +1,15 @@
-export const StorageKeys = {
-  USER_META: 'user-meta',
-  USER: 'user-',
-  CONTENT_META: 'content-meta',
-  CONTENT: 'content-'
-};
 /**
  * Returns all posts from local storage
  * @returns {Promise<any>}
  */
 import { Get, Set } from './StorageUtils';
+
+export const StorageKeys = {
+  USER_META: 'user-meta',
+  USER: 'user-',
+  CONTENT_META: 'content-meta',
+  CONTENT: 'content-',
+};
 
 export const GetContent = id => new Promise((resolve, reject) => {
   try {
@@ -69,15 +70,13 @@ export const SetContent = (content) => {
  * @returns {Promise<any>}
  * @constructor
  */
-export const GetUsers = (userId) => new Promise((resolve, reject) => {
+export const GetUsers = userId => new Promise((resolve, reject) => {
   try {
     const userMeta = Get(StorageKeys.USER_META);
-    let users = userMeta.map(userId => Get(`${StorageKeys.USER}${userId}`));
+    let users = userMeta.map(userKey => Get(`${StorageKeys.USER}${userKey}`));
     // Sending a single user detail in case userId is mentioned
     if (userId) {
-      users = users.filter((user) => {
-        return user.id === userId;
-      })[0];
+      users = users.filter(user => user.id === userId)[0];
     }
     // to mock a call from backend, adding a timeout of 1 second
     setTimeout(() => {
@@ -88,8 +87,8 @@ export const GetUsers = (userId) => new Promise((resolve, reject) => {
   }
 });
 
-export const SetUser = (userData) =>{
-  if(userData){
+export const SetUser = (userData) => {
+  if (userData) {
     const userMeta = Get(StorageKeys.USER_META) || [];
     // Adding hash of ids to get later
     if (!userMeta.includes(userData.id)) {

@@ -18,7 +18,8 @@
           <!-- Indented comments or replies -->
           <NewPost v-on:onSend="addChild" :init-content="replyData"></NewPost>
 
-          <Link v-if="content.nodes && childCount" :value="hideChildText" size="small" @click="toggleChild"></Link>
+          <Link v-if="content.nodes && childCount" :value="hideChildText"
+                size="small" @click="toggleChild"/>
 
           <transition-group>
             <ContentBox
@@ -36,102 +37,103 @@
   </div>
 </template>
 <script>
-  import PostMeta from './PostMeta';
-  import NewPost from './NewPost';
-  import Loading from './Loading';
-  import ContentBoxControl from './ContentBoxControl';
-  import Link from './Link';
+import PostMeta from './PostMeta';
+import NewPost from './NewPost';
+import Loading from './Loading';
+import ContentBoxControl from './ContentBoxControl';
+import Link from './Link';
 
-  import { GetContents, SetContent, UpdateContent } from '../utils/HttpUtils';
-  import { generateId, getPlural } from '../utils/CommonUtils';
-  /* import CommentWrapper from '../components/CommentWrapper.vue' */
+import { GetContents, SetContent, UpdateContent } from '../utils/HttpUtils';
+import { generateId, getPlural } from '../utils/CommonUtils';
+/* import CommentWrapper from '../components/CommentWrapper.vue' */
 
-  export default {
-    name: 'ContentBox',
-    components: {
-      PostMeta,
-      NewPost,
-      Loading,
-      ContentBoxControl,
-      Link
+export default {
+  name: 'ContentBox',
+  components: {
+    PostMeta,
+    NewPost,
+    Loading,
+    ContentBoxControl,
+    Link,
+  },
+  data() {
+    return {
+      showChild: false,
+      isNewContentBoxVisible: false,
+      replyData: {},
+      isLoading: false,
+    };
+  },
+  methods: {
+    getPlural,
+    loadChild() {
+      this.isLoading = true;
+      const self = this;
+
+      GetContents(this.content.depth + 1, this.content.id)
+        .then((data) => {
+          self.$set(self.content, 'nodes', data || []);
+          self.showChild = true;
+          self.isLoading = false;
+        });
     },
-    data() {
-      return {
-        showChild: false,
-        isNewContentBoxVisible: false,
-        replyData: {},
-        isLoading: false
+    toggleChild() {
+      // if depth is less than equal to 2, keep nesting and for rest depth, reply in same depth
+      if (this.content.depth <= 2) {
+        if (!this.showChild) {
+          this.loadChild();
+        } else {
+          this.showChild = false;
+        }
+        return;
+      }
+      // when depth > 2
+      this.$emit('reply', { replyTo: this.content.userId });
+    },
+    addChild(data) {
+      // Updating content locally and in storage
+      this.content.comments += 1;
+      UpdateContent(this.content, 'comments', this.content.comments);
+      // adding a node
+      const child = {
+        content: data.content,
+        postedOn: data.postedOn || +new Date(),
+        depth: this.content.depth + 1,
+        parent: this.content.id,
+        comments: 0,
+        id: generateId(),
+        userId: this.$store.state.currentUser.id,
+      };
+      this.content.nodes.push(child);
+      // Update local storage
+      SetContent(child);
+    },
+    onReply(data) {
+      const content = `@${this.$store.state.userData[data.replyTo].username} `;
+      this.replyData = {
+        on: +new Date(),
+        content,
       };
     },
-    methods: {
-      getPlural,
-      loadChild() {
-        this.isLoading = true;
-        const self = this;
-
-        GetContents(this.content.depth + 1, this.content.id)
-          .then((data) => {
-            self.$set(self.content, 'nodes', data || []);
-            self.showChild = true;
-            self.isLoading = false;
-          });
-      },
-      toggleChild() {
-        // if depth is less than equal to 2, keep nesting and for rest depth, reply in same depth
-        if (this.content.depth <= 2) {
-          if (!this.showChild) {
-            this.loadChild();
-          } else {
-            this.showChild = false;
-          }
-          return;
-        }
-        // when depth > 2
-        this.$emit('reply', { replyTo: this.content.userId });
-      },
-      addChild(data) {
-        // Updating content locally and in storage
-        this.content.comments++;
-        UpdateContent(this.content, 'comments', this.content.comments);
-        // adding a node
-        const child = {
-          content: data.content,
-          postedOn: data.postedOn || +new Date,
-          depth: this.content.depth + 1,
-          parent: this.content.id,
-          comments: 0,
-          id: generateId(),
-          userId: this.$store.state.currentUser.id
-        };
-        this.content.nodes.push(child);
-        // Update local storage
-        SetContent(child);
-      },
-      onReply(data) {
-        const content = `@${this.$store.state.userData[data.replyTo].username} `;
-        this.replyData = {
-          on: +new Date(),
-          content
-        };
-      }
+  },
+  computed: {
+    hideChildText() {
+      return `Hide ${this.depth === 1 ? getPlural('Comment', 'Comments', this.childCount) : getPlural('Reply',
+        'Replies', this.childCount)}`;
     },
-    computed: {
-      hideChildText() {
-        return `Hide ${this.depth === 1 ? getPlural('Comment', 'Comments', this.childCount) : getPlural('Reply',
-          'Replies', this.childCount)}`;
-      },
-      childCount() {
-        return this.content.comments || 0;
-      },
-      sortedNestedContent() {
-        if (this.content && this.content.nodes) {
-          return this.content.nodes.sort((a, b) => b.postedOn - a.postedOn);
-        }
-        return [];
-      }
+    childCount() {
+      return this.content.comments || 0;
     },
-    props: ['content', 'depth']
-  };
+    sortedNestedContent() {
+      if (this.content && this.content.nodes) {
+        const nodes = this.content.nodes.slice();
+        return nodes.sort((a, b) => b.postedOn - a.postedOn);
+      }
+      return [];
+    },
+  },
+  props: ['content', 'depth'],
+};
 </script>
 <style>
   .content-box {

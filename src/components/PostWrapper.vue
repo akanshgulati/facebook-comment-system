@@ -1,7 +1,8 @@
 <template>
   <div class="posts">
     <transition-group name="list">
-      <ContentBox v-for="post in sortedPosts" :content="post" :depth="1" class="post" :key="post.id"></ContentBox>
+      <ContentBox v-for="post in sortedPosts" :content="post" :depth="1" class="post"
+                  :key="post.id"></ContentBox>
     </transition-group>
   </div>
 </template>
