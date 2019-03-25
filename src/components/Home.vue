@@ -17,6 +17,9 @@
       <h1>Timeline Section</h1>
       <TimelineWrapper></TimelineWrapper>
     </div>
+    <div>
+      <img src="/static/reset.png" alt="" class="reset-icon" title="Reset All" @click="resetAll">
+    </div>
   </div>
 </template>
 
@@ -60,6 +63,13 @@ export default {
       this.postData.push(content);
       SetContent(content);
     },
+    resetAll() {
+      /* eslint-disable no-alert */
+      if (confirm('Are you sure you want to reset all?')) {
+        localStorage.clear();
+        location.reload();
+      }
+    },
   },
   components: {
     TimelineWrapper,
@@ -96,5 +106,13 @@ export default {
 
   .timeline-block {
     margin-left: 100px;
+  }
+  .reset-icon {
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
   }
 </style>

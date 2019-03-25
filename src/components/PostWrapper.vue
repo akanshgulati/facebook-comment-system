@@ -10,21 +10,15 @@
 <script>
 import UserIcon from './UserIcon';
 import PostMeta from './PostMeta';
-/* import CommentWrapper from './CommentWrapper' */
 import ContentBox from './ContentBox';
 
 export default {
   name: 'PostWrapper',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-    };
-  },
   computed: {
     sortedPosts() {
       if (this.posts && this.posts.length) {
         const arr = this.posts.slice();
-        return arr.sort((a, b) => b.postedOn - a.postedOn);
+        return arr.filter(node => !node.isDeleted).sort((a, b) => b.postedOn - a.postedOn);
       }
       return [];
     },

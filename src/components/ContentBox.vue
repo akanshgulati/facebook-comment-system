@@ -6,7 +6,13 @@
     <!-- Post Content and Controls -->
     <div class="content-box__indent">
       <div class="content__description" v-html="content.content"></div>
-      <ContentBoxControl v-on:toggleChild="toggleChild" :count="childCount" :depth="depth"/>
+      <ContentBoxControl
+        v-on:toggleChild="toggleChild"
+        :count="childCount"
+        :depth="depth"
+        v-on:deleteChild="deleteChild"
+        :showDelete="isDeleteEnabled"
+      />
     </div>
 
     <!-- Indented replies or comment -->
@@ -28,6 +34,7 @@
               :depth="depth + 1"
               :key="childNode.id"
               v-on:reply="onReply"
+              v-on:decrementComment="decrementComment"
             />
           </transition-group>
         </div>
@@ -45,6 +52,7 @@ import Link from './Link';
 
 import { GetContents, SetContent, UpdateContent } from '../utils/HttpUtils';
 import { generateId, getPlural } from '../utils/CommonUtils';
+import { isNumber } from '../utils/DataTypeUtils';
 
 export default {
   name: 'ContentBox',
@@ -107,6 +115,19 @@ export default {
       // Update local storage
       SetContent(child);
     },
+    decrementComment() {
+      if (isNumber(this.content.comments) && this.content.comments > 0) {
+        this.content.comments -= 1;
+        UpdateContent(this.content, 'comments', this.content.comments);
+      }
+    },
+    deleteChild() {
+      if (this.content.parent) {
+        this.$emit('decrementComment', this.content.depth - 1);
+      }
+      this.$set(this.content, 'isDeleted', true);
+      UpdateContent(this.content, 'isDeleted', true);
+    },
     onReply(data) {
       const content = `@${this.$store.state.userData[data.replyTo].username} `;
       this.replyData = {
@@ -126,9 +147,12 @@ export default {
     sortedNestedContent() {
       if (this.content && this.content.nodes) {
         const nodes = this.content.nodes.slice();
-        return nodes.sort((a, b) => b.postedOn - a.postedOn);
+        return nodes.filter(node => !node.isDeleted).sort((a, b) => b.postedOn - a.postedOn);
       }
       return [];
+    },
+    isDeleteEnabled() {
+      return this.content.userId === this.$store.state.currentUser.id;
     },
   },
   props: ['content', 'depth'],

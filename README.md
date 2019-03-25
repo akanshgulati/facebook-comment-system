@@ -44,6 +44,6 @@ npm test
 - Webpack (Compiler)
 
 ### Future Scope
-1. Add functionality to delete the comments and posts
+1. Add functionality to edit the comments and posts
 2. Tagging and emoticons in post and comment
 3. Option to add pagination on posts and comments

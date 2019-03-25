@@ -11,18 +11,15 @@ export const StorageKeys = {
   CONTENT: 'content-',
 };
 
-export const GetContent = id => new Promise((resolve, reject) => {
-  try {
-    const content = Get(`${StorageKeys.CONTENT}${id}`);
-    // to mock a call from backend, adding a timeout of 1 second
-    setTimeout(() => {
-      resolve(content);
-    }, 1000);
-  } catch (e) {
-    reject(e);
-  }
-});
-
+/**
+ * Returns the content from the storage, it is done in two steps
+ * 1. Get all ids from content meta key
+ * 2. Get content details by traversing ids in a loop
+ * @param depth
+ * @param parent
+ * @returns {Promise<any>}
+ * @constructor
+ */
 export const GetContents = (depth = 1, parent) => new Promise((resolve, reject) => {
   try {
     const contentMeta = Get(StorageKeys.CONTENT_META);
@@ -43,7 +40,13 @@ export const GetContents = (depth = 1, parent) => new Promise((resolve, reject) 
     reject(e);
   }
 });
-
+/**
+ * To update a particular content key
+ * @param content
+ * @param key
+ * @param value
+ * @constructor
+ */
 export const UpdateContent = (content, key, value) => {
   const localContent = Get(`${StorageKeys.CONTENT}${content.id}`);
   if (!localContent) {
@@ -52,7 +55,11 @@ export const UpdateContent = (content, key, value) => {
   localContent[key] = value;
   Set(`${StorageKeys.CONTENT}${content.id}`, localContent);
 };
-
+/**
+ * Post new content to local storage
+ * @param content
+ * @constructor
+ */
 export const SetContent = (content) => {
   if (content) {
     const contentMeta = Get(StorageKeys.CONTENT_META) || [];

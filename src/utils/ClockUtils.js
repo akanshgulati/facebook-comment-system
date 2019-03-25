@@ -49,5 +49,8 @@ export const getHumanReadableTime = (timestamp) => {
 
   return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 };
-
+/**
+ * Give current time stamp
+ * @returns {number}
+ */
 export const getTime = () => +new Date();

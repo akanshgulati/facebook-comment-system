@@ -1,10 +1,11 @@
 <template>
-  <div style="background-color: white;">
-    <div class="timeline-item">
-      <div class="timeline-item__content-type">{{content.depth === 1 ? 'Post': 'Comment'}}</div>
-      <PostMeta :meta="content"></PostMeta>
-      <div class="timeline-item__description" v-html="trim(content.content, 150)"></div>
-  </div>
+  <div class="timeline-item">
+    <div class="timeline-item__content-type">
+      <span>{{content.depth === 1 ? 'Post': 'Comment'}}</span>
+      <span class="timeline-item__content-type--deleted" v-show="content.isDeleted">Deleted</span>
+    </div>
+    <PostMeta :meta="content"></PostMeta>
+    <div class="timeline-item__description" v-html="trim(content.content, 150)"></div>
   </div>
 </template>
 <script>
@@ -43,5 +44,10 @@ export default {
     color: #8a8a8a;
     font-weight: 900;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .timeline-item__content-type--deleted {
+    color: #e03032;
   }
 </style>

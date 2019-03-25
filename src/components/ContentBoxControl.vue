@@ -1,6 +1,9 @@
 <template>
   <div class="control-box">
-    <Link :value="depth === 1 ? 'Comment': 'Reply'" @click="toggle" type="primary"/>
+    <div>
+      <Link :value="depth === 1 ? 'Comment': 'Reply'" @click="toggle" type="primary"/>
+      <Link value="Delete" @click="deleteChild" class="control-box__delete" v-show="showDelete"/>
+    </div>
     <Link :value="secondaryText" @click="toggle" type="secondary"/>
   </div>
 </template>
@@ -15,6 +18,9 @@ export default {
       this.$emit('toggleChild');
     },
     getPlural,
+    deleteChild() {
+      this.$emit('deleteChild');
+    },
   },
   props: {
     depth: {
@@ -24,6 +30,10 @@ export default {
     count: {
       type: Number,
       required: true,
+    },
+    showDelete: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {
@@ -58,5 +68,8 @@ export default {
 
   .control-box__link-right {
     margin-left: auto;
+  }
+  .control-box__delete {
+    margin-left: 10px;
   }
 </style>
