@@ -27,12 +27,14 @@ export const GetContents = (depth = 1, parent) => new Promise((resolve, reject) 
   try {
     const contentMeta = Get(StorageKeys.CONTENT_META);
     let contents = contentMeta.map(contentId => Get(`${StorageKeys.CONTENT}${contentId}`));
-    contents = contents.filter((content) => {
-      if (parent) {
-        return content.parent === parent;
-      }
-      return content.depth === depth;
-    });
+    if (depth !== 0) {
+      contents = contents.filter((content) => {
+        if (parent) {
+          return content.parent === parent;
+        }
+        return content.depth === depth;
+      });
+    }
     // to mock a call from backend, adding a timeout of 1 second
     setTimeout(() => {
       resolve(contents);

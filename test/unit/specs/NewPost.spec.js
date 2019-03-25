@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-Vue.use(Vuex);
 import NewPost from '@/components/NewPost';
-import { createRenderer } from 'vue-server-renderer'
+import { createRenderer } from 'vue-server-renderer';
+
+Vue.use(Vuex);
 
 describe('NewPost.vue', () => {
   let store;
@@ -10,10 +11,10 @@ describe('NewPost.vue', () => {
     store = new Vuex.Store({
       state: {
         currentUser: {
-          image: '1.png'
-        }
-      }
-    })
+          image: '1.png',
+        },
+      },
+    });
   });
 
   it('should match the snapshot', () => {
@@ -23,11 +24,11 @@ describe('NewPost.vue', () => {
       propsData: {
         placeholder: 'this is placeholder',
       },
-      store
+      store,
     }).$mount();
     renderer.renderToString(vm, (err, str) => {
       expect(str).toMatchSnapshot();
-    })
+    });
   });
 
   it('should match the snapshot with primary', () => {
@@ -36,13 +37,13 @@ describe('NewPost.vue', () => {
     const vm = new Constructor({
       propsData: {
         placeholder: 'this is placeholder',
-        isPrimary: true
+        isPrimary: true,
       },
-      store
+      store,
     }).$mount();
     renderer.renderToString(vm, (err, str) => {
       expect(str).toMatchSnapshot();
-    })
+    });
   });
 
   it('should add correct user image', () => {
@@ -50,9 +51,9 @@ describe('NewPost.vue', () => {
     const vm = new Constructor({
       propsData: {
         placeholder: 'this is placeholder',
-        count: 2
+        count: 2,
       },
-      store
+      store,
     }).$mount();
     expect(vm.$el.querySelector('.new-post__img').hasAttribute('src')).toBeTruthy();
     expect(vm.$el.querySelector('.new-post__img').getAttribute('src')).toBe('1.png');
@@ -63,9 +64,9 @@ describe('NewPost.vue', () => {
     const vm = new Constructor({
       propsData: {
         placeholder: 'this is placeholder',
-        count: 2
+        count: 2,
       },
-      store
+      store,
     }).$mount();
     const placeholderText = vm.$el.querySelector('.new-post__content').children[0].getAttribute('placeholder');
     expect(placeholderText).toBe('this is placeholder');

@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import ContentBoxControl from '@/components/ContentBoxControl';
-import { createRenderer } from 'vue-server-renderer'
+import { createRenderer } from 'vue-server-renderer';
 
 describe('ControlBoxControl.vue', () => {
   it('should render correct contents', () => {
     const Constructor = Vue.extend(ContentBoxControl);
     const vm = new Constructor({
-        propsData: {
-          depth: 1,
-          count: 2
-        }
-      }).$mount();
+      propsData: {
+        depth: 1,
+        count: 2,
+      },
+    }).$mount();
     expect(vm.$el.children.length).toEqual(2);
   });
   it('should show comment string for depth 1', () => {
@@ -18,8 +18,8 @@ describe('ControlBoxControl.vue', () => {
     const vm = new Constructor({
       propsData: {
         depth: 1,
-        count: 2
-      }
+        count: 2,
+      },
     }).$mount();
     expect(vm.$el.children[0].innerHTML).toContain('Comment');
   });
@@ -28,8 +28,8 @@ describe('ControlBoxControl.vue', () => {
     const vm = new Constructor({
       propsData: {
         depth: 2,
-        count: 2
-      }
+        count: 2,
+      },
     }).$mount();
     expect(vm.$el.children[0].innerHTML).toContain('Reply');
   });
@@ -38,8 +38,8 @@ describe('ControlBoxControl.vue', () => {
     const vm = new Constructor({
       propsData: {
         depth: 2,
-        count: 2
-      }
+        count: 2,
+      },
     }).$mount();
     expect(vm.$el.children[1].innerHTML).toContain('2');
     expect(vm.$el.children[1].innerHTML).toContain('Replies');
@@ -49,8 +49,8 @@ describe('ControlBoxControl.vue', () => {
     const vm = new Constructor({
       propsData: {
         depth: 2,
-        count: 1
-      }
+        count: 1,
+      },
     }).$mount();
     expect(vm.$el.children[1].innerHTML).toContain('1');
     expect(vm.$el.children[1].innerHTML).toContain('Reply');
@@ -60,8 +60,8 @@ describe('ControlBoxControl.vue', () => {
     const vm = new Constructor({
       propsData: {
         depth: 1,
-        count: 1
-      }
+        count: 1,
+      },
     }).$mount();
     expect(vm.$el.children[1].innerHTML).toContain('1');
     expect(vm.$el.children[1].innerHTML).toContain('Comment');
@@ -71,8 +71,8 @@ describe('ControlBoxControl.vue', () => {
     const vm = new Constructor({
       propsData: {
         depth: 1,
-        count: 2
-      }
+        count: 2,
+      },
     }).$mount();
     expect(vm.$el.children[1].innerHTML).toContain('2');
     expect(vm.$el.children[1].innerHTML).toContain('Comments');
@@ -84,13 +84,13 @@ describe('ControlBoxControl.vue', () => {
     const vm = new Constructor({
       propsData: {
         depth: 1,
-        count: 1
-      }
+        count: 1,
+      },
     }).$mount();
     renderer.renderToString(vm, (err, str) => {
       expect(str).toMatchSnapshot();
       done();
-    })
+    });
   });
 
   it('should match the snapshot with depth 2 and count 2', (done) => {
@@ -99,8 +99,8 @@ describe('ControlBoxControl.vue', () => {
     const vm = new Constructor({
       propsData: {
         depth: 2,
-        count: 2
-      }
+        count: 2,
+      },
     }).$mount();
     renderer.renderToString(vm, (err, str) => {
       expect(str).toMatchSnapshot();

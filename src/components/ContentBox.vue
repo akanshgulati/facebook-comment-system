@@ -142,6 +142,7 @@ export default {
 
   .content__description {
     margin: 10px 0;
+    white-space: pre-line;
   }
 
   .content-box__indent {

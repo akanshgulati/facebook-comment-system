@@ -1,9 +1,10 @@
 <template>
-  <div class="comment-system">
+  <div v-if="!isLoading" class="home">
+    <div class="comment-system">
     <NewPost
       v-if="!isLoading"
       v-on:onSend="sendNewPost"
-      placeholder="What's on mind?"
+      placeholder="What's on your mind?"
       class="comment-system__new-post"
       :isPrimary="true"/>
 
@@ -11,6 +12,11 @@
       <Loading v-if="isLoading"></Loading>
       <PostWrapper :posts="postData" v-else></PostWrapper>
     </transition>
+  </div>
+
+    <div class="timeline-block">
+      <TimelineWrapper></TimelineWrapper>
+    </div>
   </div>
 </template>
 
@@ -21,6 +27,7 @@ import { generateId } from '../utils/CommonUtils';
 import NewPost from './NewPost';
 import PostWrapper from './PostWrapper';
 import Loading from './Loading';
+import TimelineWrapper from './TimelineWrapper';
 
 export default {
   beforeMount() {
@@ -54,6 +61,7 @@ export default {
     },
   },
   components: {
+    TimelineWrapper,
     NewPost,
     PostWrapper,
     Loading,
@@ -63,27 +71,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1, h2 {
-    font-weight: normal;
+  .home {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
   a {
     color: #42b983;
   }
 
   .comment-system {
+    flex-shrink: 0;
     width: 700px;
-    margin: auto;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -91,5 +91,9 @@ export default {
 
   .comment-system__new-post {
     align-self: stretch;
+  }
+
+  .timeline-block {
+    margin-left: 100px;
   }
 </style>

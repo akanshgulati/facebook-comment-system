@@ -10,4 +10,15 @@ export const getPlural = (singular, plural, count) => {
   }
   return singular;
 };
-
+/**
+ * Trim the string
+ * @param content
+ * @param length
+ * @returns {*}
+ */
+export const trim = (content, length) => {
+  if (content.length > length) {
+    return content.slice(0, length) + '...';
+  }
+  return content
+};
