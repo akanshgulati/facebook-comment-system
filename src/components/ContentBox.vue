@@ -45,7 +45,6 @@ import Link from './Link';
 
 import { GetContents, SetContent, UpdateContent } from '../utils/HttpUtils';
 import { generateId, getPlural } from '../utils/CommonUtils';
-/* import CommentWrapper from '../components/CommentWrapper.vue' */
 
 export default {
   name: 'ContentBox',

@@ -30,3 +30,20 @@ npm test
 4. Timeline keeps checking for updates and add it in the list.
 5. Human readable post time
 6. Random user as current user on every reload
+7. Posts and comment data is saved on local storage
+
+## Description
+
+### Technology
+- Vue
+- Vue Router
+- Vuex (State Management)
+- Jest Framework (Testing)
+- CSS
+- HTML
+- Webpack (Compiler)
+
+### Future Scope
+1. Add functionality to delete the comments and posts
+2. Tagging and emoticons in post and comment
+3. Option to add pagination on posts and comments
