@@ -8,13 +8,15 @@
       <textarea v-model="content" :placeholder="placeholder" rows="1" @input="onInput"></textarea>
     </div>
     <div class="new-post__control-buttons">
-      <div class="new-post__control-buttons__send" @click="onSend">Send</div>
+      <Link value="Send" type="primary" @click="onSend"/>
+      <!--<div class="new-post__control-buttons__send" @click="onSend">Send</div>-->
     </div>
   </div>
 </template>
 
 <script>
 import UserIcon from './UserIcon';
+import Link from './Link';
 
 export default {
   data() {
@@ -55,6 +57,7 @@ export default {
   },
   components: {
     UserIcon,
+    Link,
   },
   watch: {
     initContent(data) {
