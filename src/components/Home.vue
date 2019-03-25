@@ -1,6 +1,12 @@
 <template>
   <div class="comment-system">
-    <NewPost v-on:onSend="sendNewPost" placeholder="What's on mind?" class="comment-system__new-post" :isPrimary="true"></NewPost>
+    <NewPost
+      v-if="!isLoading"
+      v-on:onSend="sendNewPost"
+      placeholder="What's on mind?"
+      class="comment-system__new-post"
+      :isPrimary="true"/>
+
     <transition mode="out-in">
       <Loading v-if="isLoading"></Loading>
       <PostWrapper :posts="postData" v-else></PostWrapper>
@@ -9,7 +15,8 @@
 </template>
 
 <script>
-import { GetContents } from '../utils/HttpUtils';
+import { GetContents, SetContent, GetUsers } from '../utils/HttpUtils';
+import { generateId } from '../utils/CommonUtils';
 
 import NewPost from './NewPost';
 import PostWrapper from './PostWrapper';
@@ -17,14 +24,16 @@ import Loading from './Loading';
 
 export default {
   beforeMount() {
-    GetContents().then((data) => {
-      this.$set(this, 'postData', data);
+    Promise.all([GetContents(), GetUsers()])
+      .then((data) => {
+      this.$set(this, 'postData', data[0]);
+      this.$store.dispatch('setUsers', data[1]);
+      this.$store.commit('setCurrentUser', data[1][0]);
       this.isLoading = false;
     });
   },
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
       userData: [
         {
           name: 'Akansh Gulati',
@@ -50,17 +59,21 @@ export default {
       ],
       postData: [],
       isLoading: true,
+      currentUser: ''
     };
   },
   methods: {
     sendNewPost(data) {
-      // Add sanitization of post comment
-      this.postData.push({
+      const content = {
         content: data.content,
         postedOn: data.postedOn,
-        id: this.postData.length + 1,
-        nodes: [],
-      });
+        depth: 1,
+        comments: 0,
+        id: generateId(),
+        userId: this.$store.state.currentUser.id
+      };
+      this.postData.push(content);
+      SetContent(content);
     },
   },
   components: {
@@ -92,7 +105,7 @@ export default {
   }
 
   .comment-system {
-    width: 600px;
+    width: 700px;
     margin: auto;
     display: flex;
     flex-flow: column;
@@ -100,6 +113,6 @@ export default {
   }
 
   .comment-system__new-post {
-    width: 100%;
+    align-self: stretch;
   }
 </style>

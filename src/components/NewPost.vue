@@ -2,7 +2,7 @@
   <div :class="{'new-post--primary': isPrimary, 'new-post--secondary': !isPrimary}" class="new-post"
        @keydown.enter.exact.prevent="onSend">
 
-    <UserIcon :url="userIcon" class="new-post__img" :size="iconSize"></UserIcon>
+    <UserIcon :url="currentUserIcon" class="new-post__img" :size="iconSize"></UserIcon>
 
     <div class="new-post__content">
       <textarea v-model="content" :placeholder="placeholder" rows="1" @input="onInput"></textarea>
@@ -19,8 +19,7 @@ import UserIcon from './UserIcon';
 export default {
   data() {
     return {
-      content: '',
-      userIcon: '/static/faces/1.jpg',
+      content: ''
     };
   },
   methods: {
@@ -79,6 +78,9 @@ export default {
     iconSize() {
       return this.isPrimary ? 'medium' : 'small';
     },
+    currentUserIcon() {
+      return this.$store.state.currentUser.image;
+    }
   },
 };
 </script>

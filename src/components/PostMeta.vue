@@ -1,8 +1,8 @@
 <template>
   <div class="post__meta">
-    <UserIcon :url="url" class="post__meta__icon" size="medium"></UserIcon>
+    <UserIcon :url="user.image" class="post__meta__icon" size="medium"></UserIcon>
     <div>
-      <div class="post__meta__user-name">Akansh Gulati</div>
+      <div class="post__meta__user-name">{{user.name}}</div>
       <div class="post__meta__time">{{postTime}}</div>
     </div>
   </div>
@@ -34,6 +34,15 @@ export default {
       this.postTime = this.getPostTime(this.meta.postedOn);
     }, 6000);
   },
+  computed: {
+    user() {
+      const user = this.$store.state.userData[this.meta.userId];
+      if (user) {
+        return user;
+      }
+      return {}
+    }
+  }
 };
 </script>
 <style>

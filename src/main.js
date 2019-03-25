@@ -4,25 +4,29 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import store from './store'
 
+// Setting Dummy data
 import { Get } from './utils/StorageUtils';
-import { SetContent } from './utils/HttpUtils';
-import Contents from '../data/post.json';
-
-Vue.config.productionTip = true;
-
-/* eslint-disable no-new */
+import { SetContent, SetUser, StorageKeys } from './utils/HttpUtils';
+import ContentData from '../data/post.json';
+import UserData from '../data/user.json';
 (function loadDummyData() {
-  if (!Get('content-meta')) {
-    Contents.forEach((content) => {
+  if (!Get(StorageKeys.CONTENT_META) || !Get(StorageKeys.USER_META)) {
+    ContentData.forEach((content) => {
       SetContent(content);
+    });
+    UserData.forEach((user) => {
+      SetUser(user);
     });
   }
 }());
 
+Vue.config.productionTip = false;
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
 });

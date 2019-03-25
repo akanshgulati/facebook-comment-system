@@ -77,6 +77,7 @@
           });
       },
       toggleChild() {
+        // if depth is less than equal to 2, keep nesting and for rest depth, reply in same depth
         if (this.content.depth <= 2) {
           if (!this.showChild) {
             this.loadChild();
@@ -85,8 +86,8 @@
           }
           return;
         }
-
-        this.$emit('reply', { replyTo: 'akansh' });
+        // when depth > 2
+        this.$emit('reply', { replyTo: this.content.userId });
       },
       addChild(data) {
         // Updating content locally and in storage
@@ -95,18 +96,19 @@
         // adding a node
         const child = {
           content: data.content,
-          postedOn: data.postedOn,
+          postedOn: data.postedOn || +new Date,
           depth: this.content.depth + 1,
           parent: this.content.id,
           comments: 0,
-          id: generateId()
+          id: generateId(),
+          userId: this.$store.state.currentUser.id
         };
         this.content.nodes.push(child);
         // Update local storage
         SetContent(child);
       },
       onReply(data) {
-        const content = `@${data.replyTo}`;
+        const content = `@${this.$store.state.userData[data.replyTo].username} `;
         this.replyData = {
           on: +new Date(),
           content
