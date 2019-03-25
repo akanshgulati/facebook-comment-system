@@ -25,6 +25,7 @@ npm test
 
 ## Functionality
 1. Auto increase new post section height and font size reduces with increase in content.
+2. Use `Shift + Enter` to add multi line posts and press `Enter` to post
 2. 2-level nested comments are supported.
 3. Referring user directly with `@` in order to target that user.
 4. Timeline keeps checking for updates and add it in the list.
