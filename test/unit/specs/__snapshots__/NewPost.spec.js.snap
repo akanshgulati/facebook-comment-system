@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewPost.vue should match the snapshot 1`] = `
+<div class="new-post new-post--secondary"><img src="1.png" alt="" class="user-icon new-post__img user-icon--small">
+    <div class="new-post__content"><textarea placeholder="this is placeholder" rows="1"></textarea></div>
+    <div class="new-post__control-buttons">
+        <div class="new-post__control-buttons__send">Send</div>
+    </div>
+</div>
+`;
+
+exports[`NewPost.vue should match the snapshot with primary 1`] = `
+<div class="new-post new-post--primary"><img src="1.png" alt="" class="user-icon new-post__img user-icon--medium">
+    <div class="new-post__content"><textarea placeholder="this is placeholder" rows="1"></textarea></div>
+    <div class="new-post__control-buttons">
+        <div class="new-post__control-buttons__send">Send</div>
+    </div>
+</div>
+`;

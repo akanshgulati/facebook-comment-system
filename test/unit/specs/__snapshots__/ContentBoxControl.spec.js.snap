@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ControlBoxControl.vue should match the snapshot with depth 1 and count 1 1`] = `
+<div class="control-box"><a class="primary">
+        Comment
+    </a> <a class="secondary">
+        1 Comment
+    </a></div>
+`;
+
+exports[`ControlBoxControl.vue should match the snapshot with depth 2 and count 2 1`] = `
+<div class="control-box"><a class="primary">
+        Reply
+    </a> <a class="secondary">
+        2 Replies
+    </a></div>
+`;
