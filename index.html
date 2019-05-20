@@ -17,7 +17,17 @@
     webengage.init('826180c0');
     </script>
     <script>
+        // Check that service workers are registered
+        if ('serviceWorker' in navigator) {
+          // Use the window load event to keep the page load performant
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js');
+          });
+        }
+        </script>
+    <script>
       function init() {
+        
           webengage.user.login('9SBOkLVMWvPX'); //9SBOkLVMWvPX is the unique user identifier being used here 
           webengage.user.setAttribute('we_email', 'john@doe.com');
           webengage.user.setAttribute('we_birth_date', '1986-08-19');

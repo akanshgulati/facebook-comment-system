@@ -10,6 +10,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin');
+
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -31,6 +33,10 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
+    new WorkboxPlugin.GenerateSW({
+      importScripts: ['https://ssl.widgets.webengage.com/js/service-worker.js']
+    }),
+    
     new webpack.DefinePlugin({
       'process.env': env
     }),
